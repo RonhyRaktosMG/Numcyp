@@ -5,43 +5,34 @@
 #include "../numcypArray/numcypArray.hpp"
 #include <iostream>
 #include <vector>
+#include <type_traits>
+#include <iterator>
+#include <cmath>
+
 
 namespace numcyp
-{
-    void print();
-    
+{    
+   
     template <typename T>
     NumcypArray array(T& data, std::vector<int> shape) {
-
         //Must verify the shape manually
-        /* std::vector<int> shape;
-
-        int s = data.size();
-        if (s == 0) {
-            throw std::invalid_argument("Array must have at least one row");
-        }
-        shape.push_back(s);
-
-        auto* row = &data;
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-        while (row->size() != 1){
-            s = row->size();
-            std::cout << s << std::endl;
-            shape.push_back(s);
-            row = &(*row)[0];
-        } */
+        NumcypArray arr(shape);
 
-        
-        //Display of the shape
-        std::cout << "Shape : (";
-        for (int i:shape){
-            std::cout << i << ", ";
-        }
-        std::cout << ")" << std::endl;
+        //Convert the data to an 1D vector
+        arr.flatten(data, arr.data);
 
-        NumcypArray a(shape);
-        return a;
+        return arr;
     };   
+
+    NumcypArray full(std::vector<int> shape, float value);
+    NumcypArray zeros(std::vector<int> shape);
+    NumcypArray ones(std::vector<int> shape);
+    
+
+    NumcypArray arange(float start, float end, float step=1);
+    NumcypArray linspace(float start, float end, int nbr_divisions);
 }
 
 #endif
