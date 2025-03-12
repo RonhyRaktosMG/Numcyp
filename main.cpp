@@ -30,12 +30,18 @@ int main () {
             {1, 6, 2, 9},
         }
     }; */
+
+    np::NumcypArray a = np::array(vec, {3, 2, 4});
+    cout << a;
    
-    np::NumcypArray r = np::arange(10, 25, 2);
-    cout << r;
+    np::NumcypArray a = np::eye(3);
+    cout << a;
 
-    np::NumcypArray l = np::linspace(0, 2, 4);
-    cout << l;
+    cout << a.size << endl;
+    cout << a.ndim << endl;
 
+    np::NumcypArray b = a+a;
+    b = b/b;
+    cout << b ;
     return 0;
 }

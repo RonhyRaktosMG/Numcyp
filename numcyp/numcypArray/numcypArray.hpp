@@ -13,8 +13,11 @@ namespace numcyp
     class NumcypArray
     {
         public:
-            std::vector<int> shape {};
             std::vector<float> data {};
+            
+            std::vector<int> shape {};
+            int ndim = 0;
+            int size = 0;
 
             NumcypArray(std::vector<int> _shape);
             ~NumcypArray();
@@ -43,7 +46,18 @@ namespace numcyp
             }
 
 
-            
+
+        /* ========== INSPECTING ARRAY ============= */
+
+
+
+
+
+        /* ========== ARITHMETIC OPERATOR ============= */
+        friend NumcypArray operator+(NumcypArray& arr1, NumcypArray& arr2);
+        friend NumcypArray operator-(NumcypArray& arr1, NumcypArray& arr2);
+        friend NumcypArray operator*(NumcypArray& arr1, NumcypArray& arr2);
+        friend NumcypArray operator/(NumcypArray& arr1, NumcypArray& arr2);
     };
 } // namespace numcyp
 

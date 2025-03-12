@@ -6,6 +6,8 @@ namespace numcyp
     NumcypArray::NumcypArray(std::vector<int> _shape)
     {
         shape = _shape;
+        ndim = shape[0];
+        size = getDataSize();
         //std::cout << "NumcypArray constructor with ";
         //printShape();
     }
@@ -87,24 +89,40 @@ namespace numcyp
     }
 
 
-    // display ((2, 3), (4, 5)) [
-    // display (2, 3) -> (4, 5) [[
-    // display (2 -> 3 -> 4 -> 5) [[2, 3], [4, 5]]
-    
-    /* template <typename T>
-    T empty(const std::vector<int>& shape) {
-        if (shape.empty()) {
-            throw std::invalid_argument("Shape cannot be empty");
-        }
+    /* ========== INSPECTING ARRAY ============= */
 
-        if (shape.size() == 1) {
-            return std::vector<typename T::value_type>(shape[0]);
-        } else {
-            std::vector<T> result;
-            for (int i = 0; i < shape[0]; ++i) {
-                result.push_back(allocateArray<typename T::value_type>(std::vector<int>(shape.begin() + 1, shape.end())));
-            }
-            return result;
+
+    /* ========== ARITHMETIC OPERATOR ============= */
+    NumcypArray operator+(NumcypArray& arr1, NumcypArray& arr2){
+        NumcypArray arr(arr1.shape);
+        for (int i=0; i<arr1.getDataSize(); i++)
+        {
+            arr.data.push_back(arr1.data[i] + arr2.data[i]);
         }
-    } */
+        return arr;
+    }
+    NumcypArray operator-(NumcypArray& arr1, NumcypArray& arr2){
+        NumcypArray arr(arr1.shape);
+        for (int i=0; i<arr1.getDataSize(); i++)
+        {
+            arr.data.push_back(arr1.data[i] - arr2.data[i]);
+        }
+        return arr;
+    }
+    NumcypArray operator*(NumcypArray& arr1, NumcypArray& arr2){
+        NumcypArray arr(arr1.shape);
+        for (int i=0; i<arr1.getDataSize(); i++)
+        {
+            arr.data.push_back(arr1.data[i] * arr2.data[i]);
+        }
+        return arr;
+    }
+    NumcypArray operator/(NumcypArray& arr1, NumcypArray& arr2){
+        NumcypArray arr(arr1.shape);
+        for (int i=0; i<arr1.getDataSize(); i++)
+        {
+            arr.data.push_back(arr1.data[i] / arr2.data[i]);
+        }
+        return arr;
+    }
 }

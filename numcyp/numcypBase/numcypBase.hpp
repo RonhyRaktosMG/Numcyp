@@ -26,13 +26,22 @@ namespace numcyp
         return arr;
     };   
 
+
+    /* ========== INITIAL PLACEHOLDERS ============= */
     NumcypArray full(std::vector<int> shape, float value);
     NumcypArray zeros(std::vector<int> shape);
     NumcypArray ones(std::vector<int> shape);
+    NumcypArray eye(int dimension);
     
-
     NumcypArray arange(float start, float end, float step=1);
     NumcypArray linspace(float start, float end, int nbr_divisions);
+
+
+
+
+
+    /* ========== INSPECTING ARRAY ============= */
+
 }
 
 #endif

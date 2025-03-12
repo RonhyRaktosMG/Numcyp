@@ -20,6 +20,28 @@ namespace numcyp
     {
         return full(shape, 1);
     }
+    NumcypArray eye(int dimension)
+    {
+        NumcypArray arr({dimension, dimension});
+        int l = 0;
+        for (int i=0; i<arr.getDataSize(); i++)
+        {
+            // 1, 0 ,0
+            // 0, 1, 0
+            // 0, 0, 1
+            if (i%dimension == l){
+                arr.data.push_back(1);
+            }
+            else {
+                arr.data.push_back(0);
+            }
+            if (i%dimension == dimension-1)
+            {
+                l++;
+            }
+        }
+        return arr;
+    }
 
 
     NumcypArray arange(float start, float end, float step)
