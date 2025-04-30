@@ -58,6 +58,12 @@ namespace numcyp
         friend NumcypArray operator-(NumcypArray& arr1, NumcypArray& arr2);
         friend NumcypArray operator*(NumcypArray& arr1, NumcypArray& arr2);
         friend NumcypArray operator/(NumcypArray& arr1, NumcypArray& arr2);
+
+
+
+        /* ========= SUBSETTING, SLICING, INDEXING =========== */
+        NumcypArray operator[](int index);
+        NumcypArray slice(int start, int end);
     };
 } // namespace numcyp
 

@@ -10,13 +10,23 @@
 using namespace std;
 
 int main () {
-    vector<vector<int>> vec = {
+    // 1D array
+    /* vector<int> vec = {
+        1, 2, 3, 5,
+    };
+    np::NumcypArray a = np::array(vec, {4}); */
+
+
+    // 2D array
+    /* vector<vector<int>> vec = {
         {1, 2, 3, 5},
         {4, 5, 6, 5},
         {7, 8, 9, 5}
     };
+    np::NumcypArray a = np::array(vec, {3, 4}); */
 
-    /* vector<vector<vector<int>>> vec = {
+
+    vector<vector<vector<int>>> vec = {
         {
             {1, 1, 2, 3},
             {1, 1, 2, 3},
@@ -29,19 +39,19 @@ int main () {
             {1, 5, 2, 9},
             {1, 6, 2, 9},
         }
-    }; */
-
-    np::NumcypArray a = np::array(vec, {3, 2, 4});
-    cout << a;
+    };  
+    np::NumcypArray a = np::array(vec, {3,2,4});
    
-    np::NumcypArray a = np::eye(3);
+
     cout << a;
+    a.printShape();
+    np::NumcypArray b = a[2][1];
+    cout << b << endl;
+    np::NumcypArray c = a.slice(1, 3);
+    cout << "a[1:2] : " << c << endl;
 
-    cout << a.size << endl;
-    cout << a.ndim << endl;
 
-    np::NumcypArray b = a+a;
-    b = b/b;
-    cout << b ;
+
+
     return 0;
 }

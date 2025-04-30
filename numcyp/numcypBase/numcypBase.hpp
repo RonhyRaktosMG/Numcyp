@@ -17,7 +17,8 @@ namespace numcyp
     NumcypArray array(T& data, std::vector<int> shape) {
         //Must verify the shape manually
         //!!!!!!!!!!!!!!!!!!!!!!!!!!
-        
+ 
+       
         NumcypArray arr(shape);
 
         //Convert the data to an 1D vector

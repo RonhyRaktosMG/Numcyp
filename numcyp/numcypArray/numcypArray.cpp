@@ -125,4 +125,73 @@ namespace numcyp
         }
         return arr;
     }
+
+
+    /* ========= SUBSETTING, SLICING, INDEXING =========== */
+    NumcypArray NumcypArray::operator[](int index){
+        if (index >= shape[0])
+        {
+            std::cout << "Index out of range!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        if (shape.size() == 1) {
+            // If 1D array
+            NumcypArray sub({1});
+            sub.data.push_back(data[index]);
+            return sub;
+        }
+
+        int dataToCopy = 1;
+        for (size_t i = 1; i < shape.size(); i++) {
+            dataToCopy *= shape[i];
+        }
+
+        // Create the new shape for the sub-array
+        std::vector<int> newShape(shape.begin() + 1, shape.end());
+
+        // Create the sub-array
+        NumcypArray sub(newShape);
+        for (int i = dataToCopy * index; i < dataToCopy * (index + 1); i++) {
+            sub.data.push_back(data[i]);
+        }
+
+        return sub;
+    }
+
+    NumcypArray NumcypArray::slice(int start, int end){
+        if (start < 0 || end > shape[0])
+        {
+            std::cout << "Index out of range!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        if (shape.size() == 1)
+        {
+            // If 1D array
+            NumcypArray sub({end-start});
+            for (int i = start; i < end; i++)
+            {
+                sub.data.push_back(data[i]);
+            }
+            return sub;
+        }
+
+        int dataToCopy = 1;
+        for (size_t i = 1; i < shape.size(); i++) {
+            dataToCopy *= shape[i];
+        }
+        // Create the new shape for the sub-array
+        std::vector<int> newShape(shape.begin(), shape.end());
+        newShape[0] = end - start;
+        
+        // Create the sub-array
+        NumcypArray sub(newShape);
+        for (int i = dataToCopy * start; i < dataToCopy * end; i++) {
+            sub.data.push_back(data[i]);
+        }
+        return sub;
+    }
 }
+
+
