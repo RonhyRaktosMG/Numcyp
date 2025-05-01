@@ -92,7 +92,8 @@ namespace numcyp
     /* ========== INSPECTING ARRAY ============= */
 
 
-    /* ========== ARITHMETIC OPERATOR ============= */
+    /* ========== ARRAY MATHEMATICS ============= */
+        // Arithmetic operations
     NumcypArray operator+(NumcypArray& arr1, NumcypArray& arr2){
         NumcypArray arr(arr1.shape);
         for (int i=0; i<arr1.getDataSize(); i++)
@@ -124,6 +125,42 @@ namespace numcyp
             arr.data.push_back(arr1.data[i] / arr2.data[i]);
         }
         return arr;
+    }
+
+        // Comparison
+    NumcypArray operator<(NumcypArray& arr, float a)
+    {
+        NumcypArray res(arr.shape);
+        
+        for (int i=0; i<res.getDataSize(); i++)
+        {
+            res.data.push_back((arr.data[i] < a) ? 1 : 0);
+        }
+
+        return res;
+    }
+    
+        // Aggregate functions
+    int NumcypArray::sum()
+    {
+        int sum = 0;
+        for (int i=0; i<getDataSize(); i++)
+        {
+            sum += data[i];
+        }
+        return sum;
+    }
+    NumcypArray NumcypArray::sum(int axis)
+    {
+        if (axis >= shape.size())
+        {
+            std::cout << "Axis out of range!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        //!!!!!! eto elah zao
+        
+        return res;
     }
 
 
@@ -158,7 +195,6 @@ namespace numcyp
 
         return sub;
     }
-
     NumcypArray NumcypArray::slice(int start, int end){
         if (start < 0 || end > shape[0])
         {
@@ -184,7 +220,7 @@ namespace numcyp
         // Create the new shape for the sub-array
         std::vector<int> newShape(shape.begin(), shape.end());
         newShape[0] = end - start;
-        
+
         // Create the sub-array
         NumcypArray sub(newShape);
         for (int i = dataToCopy * start; i < dataToCopy * end; i++) {
@@ -192,6 +228,92 @@ namespace numcyp
         }
         return sub;
     }
+        
+    //Boolean indexing
+    NumcypArray NumcypArray::operator[](NumcypArray& boolArr)
+    {
+        if (boolArr.getDataSize() != getDataSize())
+        {
+            std::cout << "Boolean array must have the same size as the original array!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        
+        int dataToCopy = 0;
+        for (int i=0; i<boolArr.getDataSize(); i++)
+        {
+            if (boolArr.data[i] == 1)
+            {
+                dataToCopy++;
+            }
+        }
+
+        std::cout << "data to copy : " << dataToCopy << std::endl;
+
+        // Create the new shape for the sub-array
+        std::vector<int> newShape = {dataToCopy};
+        NumcypArray res(newShape);
+        for (size_t i = 1; i < shape.size(); i++) {
+            if (boolArr.data[i] == 1)
+            {
+                res.data.push_back(data[i]);
+            }
+        }
+
+        return res;
+    }
+
+    /* ========= ARRAY MANIPULATION =========== */
+        // Changing array shape
+    NumcypArray NumcypArray::reshape(std::vector<int> new_shape)
+    {
+        int new_size = 1;
+        for (int i=0; i<new_shape.size(); i++)
+            new_size *= new_shape[i];
+
+        if (new_size != getDataSize())
+        {
+            std::cout << "Cannot reshape array of size " << getDataSize() << " into shape ";
+            for (int i=0; i<new_shape.size(); i++)
+                std::cout << new_shape[i] << " ";
+            std::cout << "\n";
+            exit(EXIT_FAILURE);
+        }
+
+        NumcypArray arr(new_shape);
+        for (int i=0; i<data.size(); i++)
+        {
+            arr.data.push_back(data[i]);
+        }
+        return arr;
+    }
+    NumcypArray NumcypArray::ravel()
+    {
+        NumcypArray res({getDataSize()});
+        for (int i=0; i<getDataSize(); i++)
+        {
+            res.data.push_back(data[i]);
+        }
+        return res;
+    }
+
+        // Adding / Removing elements
+    NumcypArray NumcypArray::resize(std::vector<int> new_shape)
+    {
+        int new_size = 1;
+        for (int i=0; i<new_shape.size(); i++)
+            new_size *= new_shape[i];
+
+        NumcypArray arr(new_shape);
+        for (int i=0; i<new_size; i++)
+        {
+            arr.data.push_back(data[i%getDataSize()]);
+        }
+        return arr;
+    }
 }
+
+
+
 
 

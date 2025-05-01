@@ -52,18 +52,41 @@ namespace numcyp
 
 
 
-
-        /* ========== ARITHMETIC OPERATOR ============= */
+        /* ========= ARRAY MATHEMATICS =========== */
+            // Arithmetic operations
         friend NumcypArray operator+(NumcypArray& arr1, NumcypArray& arr2);
         friend NumcypArray operator-(NumcypArray& arr1, NumcypArray& arr2);
         friend NumcypArray operator*(NumcypArray& arr1, NumcypArray& arr2);
         friend NumcypArray operator/(NumcypArray& arr1, NumcypArray& arr2);
 
-
+            // Comparison
+        friend NumcypArray operator<(NumcypArray& arr, float a);
+        
+            // Aggregate functions
+        int sum();
+        NumcypArray sum(int axis);
 
         /* ========= SUBSETTING, SLICING, INDEXING =========== */
         NumcypArray operator[](int index);
         NumcypArray slice(int start, int end);
+            //Boolean Indexing
+        NumcypArray operator[](NumcypArray& boolArr);
+
+
+        /* ========= ARRAY MANIPULATION =========== */
+            // Changing array shape
+        NumcypArray reshape(std::vector<int> new_shape);
+        NumcypArray ravel();
+
+            // Adding / Removing elements
+        NumcypArray resize(std::vector<int> new_shape);
+
+
+
+
+
+            
+
     };
 } // namespace numcyp
 

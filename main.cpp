@@ -18,15 +18,15 @@ int main () {
 
 
     // 2D array
-    /* vector<vector<int>> vec = {
+    vector<vector<int>> vec = {
         {1, 2, 3, 5},
         {4, 5, 6, 5},
         {7, 8, 9, 5}
     };
-    np::NumcypArray a = np::array(vec, {3, 4}); */
+    np::NumcypArray a = np::array(vec, {3, 4});
 
 
-    vector<vector<vector<int>>> vec = {
+    /* vector<vector<vector<int>>> vec = {
         {
             {1, 1, 2, 3},
             {1, 1, 2, 3},
@@ -40,18 +40,11 @@ int main () {
             {1, 6, 2, 9},
         }
     };  
-    np::NumcypArray a = np::array(vec, {3,2,4});
+    np::NumcypArray a = np::array(vec, {3,2,4}); */
    
 
-    cout << a;
-    a.printShape();
-    np::NumcypArray b = a[2][1];
-    cout << b << endl;
-    np::NumcypArray c = a.slice(1, 3);
-    cout << "a[1:2] : " << c << endl;
-
-
-
-
+    cout << "Le  tableau : \n" << a << endl;
+    np::NumcypArray c = a.sum(0);
+    cout << "Le tableau c : \n" << c << endl;
     return 0;
 }

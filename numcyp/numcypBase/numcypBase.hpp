@@ -43,6 +43,13 @@ namespace numcyp
 
     /* ========== INSPECTING ARRAY ============= */
 
+
+
+    /* ========= ARRAY MANIPULATION =========== */
+        // Adding / Removing elements
+    NumcypArray append(NumcypArray& arr1, NumcypArray& arr2);
+    NumcypArray insert(NumcypArray& arr, int index, float value);
+    NumcypArray npdelete(NumcypArray& arr, int index);
 }
 
 #endif

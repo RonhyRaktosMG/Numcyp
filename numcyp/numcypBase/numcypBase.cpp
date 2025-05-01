@@ -76,4 +76,53 @@ namespace numcyp
     /* ============== */
     /* TEMPLATE ARRAY */
     /* ============== */
+
+
+
+
+
+
+
+    /* ========= ARRAY MANIPULATION =========== */
+        // Adding / Removing elements
+    NumcypArray append(NumcypArray& arr1, NumcypArray& arr2)
+    {
+        NumcypArray arr({arr1.getDataSize() + arr2.getDataSize()});
+        for (int i=0; i<arr1.getDataSize(); i++)
+        {
+            arr.data.push_back(arr1.data[i]);
+        }
+        for (int i=0; i<arr2.getDataSize(); i++)
+        {
+            arr.data.push_back(arr2.data[i]);
+        }
+        return arr;
+    }
+    NumcypArray insert(NumcypArray& arr, int index, float value)        // !!!!!! afaka atao tableau ny index sy ny value
+    {
+        NumcypArray newArr({arr.getDataSize() + 1});
+        for (int i=0; i<index; i++)
+        {
+            newArr.data.push_back(arr.data[i]);
+        }
+        newArr.data.push_back(value);
+        for (int i=index; i<arr.getDataSize(); i++)
+        {
+            newArr.data.push_back(arr.data[i]);
+        }
+        return newArr;
+    }
+    NumcypArray npdelete(NumcypArray& arr, int index)
+    {
+        NumcypArray newArr({arr.getDataSize() - 1});
+        for (int i=0; i<index; i++)
+        {
+            newArr.data.push_back(arr.data[i]);
+        }
+        for (int i=index+1; i<arr.getDataSize(); i++)
+        {
+            newArr.data.push_back(arr.data[i]);
+        }
+        return newArr;
+    }
 }
