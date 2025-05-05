@@ -13,13 +13,26 @@
 
 namespace numcyp
 {    
+    template <typename T>
+    typename std::enable_if<std::is_arithmetic<T>::value>::type
+    getShape(const T& value, std::vector<int>& shape) {
+        return;
+    }
+    template <typename T>
+    typename std::enable_if<!std::is_arithmetic<T>::value>::type
+    getShape(const T& container, std::vector<int>& shape) {
+        shape.push_back(container.size());
+        getShape(container[0], shape);
+    }
    
     template <typename T>
-    NumcypArray array(T& data, std::vector<int> shape) {
+    NumcypArray array(std::vector<T> data) {
         //Must verify the shape manually
         //!!!!!!!!!!!!!!!!!!!!!!!!!!
  
-       
+        std::vector<int> shape;
+        getShape(data, shape);
+
         NumcypArray arr(shape);
 
         //Convert the data to an 1D vector
@@ -27,6 +40,7 @@ namespace numcyp
 
         return arr;
     };   
+
 
 
     /* ========== INITIAL PLACEHOLDERS ============= */
@@ -46,6 +60,13 @@ namespace numcyp
 
 
 
+    /* ========= ARRAY MATHEMATICS =========== */
+        // Arithmetic operations
+    int scalar_product(NumcypArray& a, NumcypArray& b);
+    NumcypArray dot(NumcypArray& a, NumcypArray& b);
+
+
+
     /* ========= ARRAY MANIPULATION =========== */
         // Transposing Array
     NumcypArray transpose(NumcypArray& arr);
@@ -53,6 +74,10 @@ namespace numcyp
     NumcypArray append(NumcypArray& arr1, NumcypArray& arr2);
     NumcypArray insert(NumcypArray& arr, int index, float value);
     NumcypArray npdelete(NumcypArray& arr, int index);
+        // Splitting Array
+    std::vector<NumcypArray> hsplit(NumcypArray& arr, int nbr_splits);  
+    std::vector<NumcypArray> vsplit(NumcypArray& arr, int nbr_splits);
+
 }
 
 #endif

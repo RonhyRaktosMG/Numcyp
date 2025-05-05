@@ -11,25 +11,19 @@ using namespace std;
 
 int main () {
     // 1D array
-   /*  vector<int> vec = {
+    /* vector<int> vec = {
         1, 2, 3, 5,
     };
-    np::NumcypArray a = np::array(vec, {4}); */
+    */
 
 
     // 2D array
     vector<vector<int>> vec = {
-        {1, 2, 3, 5},
-        {4, 5, 6, 5},
-        {7, 8, 9, 5}
-    };
-    /* vector<vector<int>> vec = {
         {3, 4, 2},
         {4, 2, 3},
         {7, 8, 2}
-    }; */
-    np::NumcypArray a = np::array(vec, {3, 4});
-
+    };
+   
 
 /*     vector<vector<vector<int>>> vec = {
         {
@@ -45,13 +39,15 @@ int main () {
             {1, 6, 2, 9},
         }
     };  
-    np::NumcypArray a = np::array(vec, {3,2,4}); */
+*/
    
-
+    np::NumcypArray a = np::array(vec);
+    np::NumcypArray b = np::array(vector<int>{4, 5, 6});
     cout << "Le  tableau : \n" << a << endl;
-    
-    np::NumcypArray b = np::transpose(a);
-    cout << "Le  tableau transpose : \n" << b << endl;
+    cout << "b : " << b << endl;
 
+    np::NumcypArray c = np::dot(a, b);
+
+    cout << "c : " << c << endl;
     return 0;
 }

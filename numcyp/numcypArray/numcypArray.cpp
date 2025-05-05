@@ -126,6 +126,83 @@ namespace numcyp
         }
         return arr;
     }
+    int NumcypArray::scalar_product(NumcypArray& b)
+    {
+        if (shape.size() != 1 || b.shape.size() != 1)
+        {
+            std::cout << "Scalar product only works for 1D arrays!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        if (shape[0] != b.shape[0])
+        {
+            std::cout << "Arrays must have the same size!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        int res = 0;
+        for (int i=0; i<getDataSize(); i++)
+        {
+            res += data[i] * b.data[i];
+        }
+        
+        return res;
+    }
+    NumcypArray NumcypArray::dot(NumcypArray& b)
+    {
+        if (shape.size() > 2 || b.shape.size() > 2)
+        {
+            std::cout << "Dot product only works for 2D/1D arrays!\n";
+            exit(EXIT_FAILURE);
+        }
+        if (shape.size() == 1)
+        {
+            std::cout << "Dot product doesn't work with 1D*Array (try reversing them or use scalar_product)" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+
+        if (shape.size() == 2 && b.shape.size() == 1)
+        {
+            NumcypArray res(b.shape);
+            for (int i=0; i<shape[0]; i++)
+            {
+                res.data.push_back(0);
+                for (int j=0; j<shape[1]; j++)
+                {
+                    res.data[i] += data[i*shape[1] + j] * b.data[j];
+                }
+            }
+            return res;
+        }
+
+        else  // 2D * 2D
+        {
+            if (shape[1] != b.shape[0])
+            {
+                std::cout << "Arrays must have the same size!\n";
+                exit(EXIT_FAILURE);
+            }
+            int rows = shape[0];
+            int columns = b.shape[1];
+            NumcypArray res({rows, columns});
+            
+            for (int i=0; i<rows; i++)
+            {
+                for (int j=0; j<columns; j++)
+                {
+                    res.data.push_back(0);
+                    for (int k=0; k<shape[1]; k++)
+                    {
+                        res.data[i*columns + j] += data[i*shape[1] + k] * b.data[k*columns + j];
+                    }
+                }
+            }
+
+            return res;
+        }
+    }
+
+
 
         // Comparison
     NumcypArray operator<(NumcypArray& arr, float a)

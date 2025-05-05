@@ -80,7 +80,18 @@ namespace numcyp
 
 
 
+    /* ========= ARRAY MATHEMATICS =========== */
+        // Arithmetic operations
+    int scalar_product(NumcypArray& a, NumcypArray& b)
+    {
+        return a.scalar_product(b);
+    }
+    NumcypArray dot(NumcypArray& a, NumcypArray& b)
+    {
+        return a.dot(b);
+    }
 
+    
 
 
     /* ========= ARRAY MANIPULATION =========== */
@@ -157,4 +168,80 @@ namespace numcyp
         }
         return newArr;
     }
+        // Splitting Array
+    std::vector<NumcypArray> hsplit(NumcypArray& arr, int nbr_splits)
+    {
+        if (arr.shape.size() != 2)
+        {
+            std::cout << "Split only works for 2D arrays!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        if (arr.shape[1] % nbr_splits != 0)
+        {
+            std::cout << "Cannot split array of shape " << arr.shape[1] << " into " << nbr_splits << "\n";
+            exit(EXIT_FAILURE);
+        }
+
+        std::vector<NumcypArray> res;
+        int new_shape_col = arr.shape[1] / nbr_splits;
+        std::vector<int> new_shape;
+        new_shape.push_back(arr.shape[0]);
+        if (new_shape_col != 1)
+            new_shape.push_back(new_shape_col);
+        for (int i=0; i<nbr_splits; i++)
+        {
+            NumcypArray newArr(new_shape);
+            for (int j=0; j<arr.shape[0]; j++)
+            {
+                for (int k=0; k<new_shape_col; k++)
+                {
+                    newArr.data.push_back(arr.data[j*arr.shape[1] + i*new_shape_col + k]);
+                }
+            }
+            res.push_back(newArr);
+        }
+        
+        return res;
+    }
+    std::vector<NumcypArray> vsplit(NumcypArray& arr, int nbr_splits)
+    {
+        if (arr.shape.size() != 2)
+        {
+            std::cout << "Split only works for 2D arrays!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        if (arr.shape[0] % nbr_splits != 0)
+        {
+            std::cout << "Cannot split array of shape " << arr.shape[0] << " into " << nbr_splits << "\n";
+            exit(EXIT_FAILURE);
+        }
+
+        std::vector<NumcypArray> res;
+        int new_shape_row = arr.shape[0] / nbr_splits;
+        std::vector<int> new_shape;
+        if (new_shape_row != 1)
+            new_shape.push_back(new_shape_row);
+        new_shape.push_back(arr.shape[1]);
+        for (int i=0; i<nbr_splits; i++)
+        {
+            NumcypArray newArr(new_shape);
+            for (int j=0; j<new_shape_row; j++)
+            {
+                for (int k=0; k<arr.shape[1]; k++)
+                {
+                    newArr.data.push_back(arr.data[(i*new_shape_row + j)*arr.shape[1] + k]);
+                }
+            }
+            res.push_back(newArr);
+        }
+        
+        return res;
+    }
+
 }
+
+
+
+

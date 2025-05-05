@@ -28,14 +28,14 @@ namespace numcyp
             friend std::ostream& operator<<(std::ostream& os, NumcypArray& arr);
 
 
-            // Cas de base : si c'est un nombre (float, int, double...), on l'ajoute
+            // Cas de base : si c'est un nombre (float, int, double...)
             template <typename T>
             typename std::enable_if<std::is_arithmetic<T>::value>::type
             flatten(const T& value, std::vector<float>& output) {
                 output.push_back(static_cast<float>(value));
             }
 
-            // Cas récursif : si c'est un std::vector ou un autre conteneur, on le parcourt
+            // Cas récursif : si c'est un std::vector ou un autre conteneur
             template <typename T>
             typename std::enable_if<!std::is_arithmetic<T>::value>::type
             flatten(const T& container, std::vector<float>& output) {
@@ -59,6 +59,8 @@ namespace numcyp
         friend NumcypArray operator-(NumcypArray& arr1, NumcypArray& arr2);
         friend NumcypArray operator*(NumcypArray& arr1, NumcypArray& arr2);
         friend NumcypArray operator/(NumcypArray& arr1, NumcypArray& arr2);
+        int scalar_product(NumcypArray& b);
+        NumcypArray dot(NumcypArray& b);
 
             // Comparison
         friend NumcypArray operator<(NumcypArray& arr, float a);
