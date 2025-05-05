@@ -141,9 +141,9 @@ namespace numcyp
     }
     
         // Aggregate functions
-    int NumcypArray::sum()
+    float NumcypArray::sum()
     {
-        int sum = 0;
+        float sum = 0;
         for (int i=0; i<getDataSize(); i++)
         {
             sum += data[i];
@@ -152,15 +152,154 @@ namespace numcyp
     }
     NumcypArray NumcypArray::sum(int axis)
     {
+        // !!!!!!!! Tsy mande raha tsy axis=0 
+
         if (axis >= shape.size())
         {
             std::cout << "Axis out of range!\n";
             exit(EXIT_FAILURE);
         }
 
-        //!!!!!! eto elah zao
-        
+        std::vector<int> newShape(shape.begin()+1+axis, shape.end());
+        NumcypArray res(newShape);
+
+        // Calculate the sum 
+        int dataToCopy = 1;
+        for (size_t i = 0; i < axis; i++) {
+            dataToCopy *= shape[i];
+        }
+        int dataToSum = 1;
+        for (size_t i = axis + 1; i < shape.size(); i++) {
+            dataToSum *= shape[i];
+        }
+        for (int i = 0; i < dataToCopy; i++) {
+            for (int j = 0; j < dataToSum; j++) {
+                int sum = 0;
+                for (int k = 0; k < shape[axis]; k++) {
+                    sum += data[i * shape[axis] * dataToSum + k * dataToSum + j];
+                }
+                res.data.push_back(sum);
+            }
+        }
+
         return res;
+    }
+    float NumcypArray::min()
+    {
+        float min = data[0];
+        for (int i=1; i<getDataSize(); i++)
+        {
+            if (data[i] < min)
+            {
+                min = data[i];
+            }
+        }
+        return min;
+    }
+    NumcypArray NumcypArray::min(int axis)
+    {
+        // !!!!!!!! Tsy mande raha tsy axis=0 
+
+        if (axis >= shape.size())
+        {
+            std::cout << "Axis out of range!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        std::vector<int> newShape(shape.begin()+1+axis, shape.end());
+        NumcypArray res(newShape);
+
+        // Calculate the min 
+        int dataToCopy = 1;
+        for (size_t i = 0; i < axis; i++) {
+            dataToCopy *= shape[i];
+        }
+        int dataToMin = 1;
+        for (size_t i = axis + 1; i < shape.size(); i++) {
+            dataToMin *= shape[i];
+        }
+        for (int i = 0; i < dataToCopy; i++) {
+            for (int j = 0; j < dataToMin; j++) {
+                int min = data[i * shape[axis] * dataToMin + j];
+                for (int k = 1; k < shape[axis]; k++) {
+                    if (data[i * shape[axis] * dataToMin + k * dataToMin + j] < min)
+                    {
+                        min = data[i * shape[axis] * dataToMin + k * dataToMin + j];
+                    }
+                }
+                res.data.push_back(min);
+            }
+        }
+
+        return res;
+    }
+    float NumcypArray::max()
+    {
+        float max = data[0];
+        for (int i=1; i<getDataSize(); i++)
+        {
+            if (data[i] > max)
+            {
+                max = data[i];
+            }
+        }
+        return max;
+    }
+    NumcypArray NumcypArray::max(int axis)
+    {
+        // !!!!!!!! Tsy mande raha tsy axis=0 
+
+        if (axis >= shape.size())
+        {
+            std::cout << "Axis out of range!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        std::vector<int> newShape(shape.begin()+1+axis, shape.end());
+        NumcypArray res(newShape);
+
+        // Calculate the max 
+        int dataToCopy = 1;
+        for (size_t i = 0; i < axis; i++) {
+            dataToCopy *= shape[i];
+        }
+        int dataToMax = 1;
+        for (size_t i = axis + 1; i < shape.size(); i++) {
+            dataToMax *= shape[i];
+        }
+        for (int i = 0; i < dataToCopy; i++) {
+            for (int j = 0; j < dataToMax; j++) {
+                int max = data[i * shape[axis] * dataToMax + j];
+                for (int k = 1; k < shape[axis]; k++) {
+                    if (data[i * shape[axis] * dataToMax + k * dataToMax + j] > max)
+                    {
+                        max = data[i * shape[axis] * dataToMax + k * dataToMax + j];
+                    }
+                }
+                res.data.push_back(max);
+            }
+        }
+
+        return res;
+    }
+    float NumcypArray::mean()
+    {
+        return sum() / getDataSize();
+    }
+
+
+    /* ========= SORTING ARRAY =========== */
+    void NumcypArray::sort()
+    {
+        int numberInEachDim = shape[shape.size()-1];
+        int index = 0;
+
+        while (index < getDataSize())
+        {
+            std::sort(data.begin() + index, data.begin() + index + numberInEachDim);
+            index += numberInEachDim;
+        }
+
     }
 
 

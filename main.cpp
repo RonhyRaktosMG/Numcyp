@@ -11,7 +11,7 @@ using namespace std;
 
 int main () {
     // 1D array
-    /* vector<int> vec = {
+   /*  vector<int> vec = {
         1, 2, 3, 5,
     };
     np::NumcypArray a = np::array(vec, {4}); */
@@ -23,10 +23,15 @@ int main () {
         {4, 5, 6, 5},
         {7, 8, 9, 5}
     };
+    /* vector<vector<int>> vec = {
+        {3, 4, 2},
+        {4, 2, 3},
+        {7, 8, 2}
+    }; */
     np::NumcypArray a = np::array(vec, {3, 4});
 
 
-    /* vector<vector<vector<int>>> vec = {
+/*     vector<vector<vector<int>>> vec = {
         {
             {1, 1, 2, 3},
             {1, 1, 2, 3},
@@ -44,7 +49,9 @@ int main () {
    
 
     cout << "Le  tableau : \n" << a << endl;
-    np::NumcypArray c = a.sum(0);
-    cout << "Le tableau c : \n" << c << endl;
+    
+    np::NumcypArray b = np::transpose(a);
+    cout << "Le  tableau transpose : \n" << b << endl;
+
     return 0;
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <type_traits>
+#include <algorithm>
 
 
 namespace numcyp
@@ -63,8 +64,20 @@ namespace numcyp
         friend NumcypArray operator<(NumcypArray& arr, float a);
         
             // Aggregate functions
-        int sum();
+        float sum();
         NumcypArray sum(int axis);
+        float min();
+        NumcypArray min(int axis);
+        float max();
+        NumcypArray max(int axis);
+        float mean();
+
+
+
+        /* ========= SORTING =========== */
+        void sort();
+
+
 
         /* ========= SUBSETTING, SLICING, INDEXING =========== */
         NumcypArray operator[](int index);

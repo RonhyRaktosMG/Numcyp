@@ -84,6 +84,38 @@ namespace numcyp
 
 
     /* ========= ARRAY MANIPULATION =========== */
+        // Transposing Array
+    NumcypArray transpose(NumcypArray& arr)
+    {
+        if (arr.shape.size() != 2)
+        {
+            std::cout << "Transpose only works for 2D arrays!\n";
+            exit(EXIT_FAILURE);
+        }
+
+        std::vector<int> new_shape;
+        for (int i=arr.shape.size()-1; i>=0; i--)
+        {
+            new_shape.push_back(arr.shape[i]);
+        }
+
+        NumcypArray newArr(new_shape);
+        for (int i=0; i<arr.getDataSize(); i++)
+        {
+            newArr.data.push_back(0);
+        }
+        
+        int rows = arr.shape[0];
+        int columns = arr.shape[1];
+
+        for (size_t i = 0; i < rows; i++) {
+            for (size_t j = 0; j < columns; j++) {
+                newArr.data[j * rows + i] = arr.data[i * columns + j];
+            }
+        }
+
+        return newArr;
+    }
         // Adding / Removing elements
     NumcypArray append(NumcypArray& arr1, NumcypArray& arr2)
     {

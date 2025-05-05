@@ -8,6 +8,7 @@
 #include <type_traits>
 #include <iterator>
 #include <cmath>
+#include <algorithm>
 
 
 namespace numcyp
@@ -46,6 +47,8 @@ namespace numcyp
 
 
     /* ========= ARRAY MANIPULATION =========== */
+        // Transposing Array
+    NumcypArray transpose(NumcypArray& arr);
         // Adding / Removing elements
     NumcypArray append(NumcypArray& arr1, NumcypArray& arr2);
     NumcypArray insert(NumcypArray& arr, int index, float value);
